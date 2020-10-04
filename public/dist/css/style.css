@@ -1,0 +1,11 @@
+.action {
+    width: calc(100% / 12 * 3 - 10px);
+    margin: 4px 5px;
+    box-sizing: border-box;
+    text-align: center;
+    background: gainsboro;
+    padding: 10px;
+    cursor: pointer;
+}
+
+
