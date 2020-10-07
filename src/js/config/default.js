@@ -1,6 +1,6 @@
 export default {
-  "type": {
-    "simple": "simple",
-    "advanced": "advanced"
+  type: {
+    simple: "simple",
+    advanced: "advanced"
   }
 }

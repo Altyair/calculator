@@ -1,7 +1,6 @@
 import {AbstractCalculatorCore, AbstractCalculatorController, AbstractCalculatorView} from "../MathCalculator/Abstract/index";
 
 import {
-    SimpleCalculatorCore,
     SimpleCalculatorCore_ver2,
     SimpleCalculatorController,
     SimpleCalculatorView

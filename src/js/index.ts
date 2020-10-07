@@ -11,7 +11,11 @@ import { CalculatorFacade } from './src/CalculatorFacade/index';
 class Application {
 
     main() {
-        const calculator = new CalculatorFacade({type: config.type['simple']});
+      this._createCalculator();
+    }
+
+    _createCalculator(): void {
+        const calculator = new CalculatorFacade({type: config.type.simple});
         calculator.create();
     }
 
