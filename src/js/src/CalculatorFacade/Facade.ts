@@ -1,3 +1,4 @@
+import config from '../../config/default'
 import {AbstractCalculatorCore, AbstractCalculatorController, AbstractCalculatorView} from "../MathCalculator/Abstract/index";
 
 import {
@@ -46,13 +47,13 @@ export default class CalculatorFacade {
 
     create() {
         let calculator: AbstractCalculatorController;
-        if (this._type === 'simple') {
+        if ( this._type === config.math.type.simple ) {
 
             const simpleCalculatorCore: AbstractCalculatorCore = new SimpleCalculatorCore_ver2();
             const simpleCalculatorView: AbstractCalculatorView = new SimpleCalculatorView();
             calculator = new SimpleCalculatorController(simpleCalculatorCore, simpleCalculatorView);
 
-        } else if ( this._type === 'advanced' ) {
+        } else if ( this._type === config.math.type.advanced ) {
 
             const advancedCalculatorCore: AbstractCalculatorCore = new AdvancedCalculatorCore();
             const advancedCalculatorView: AbstractCalculatorView = new AdvancedCalculatorView();

@@ -1,3 +1,4 @@
+import config from "../../../config/default";
 import {AbstractCalculatorCore, AbstractCalculatorView} from "../Abstract/index";
 
 /**
@@ -9,8 +10,8 @@ import {AbstractCalculatorCore, AbstractCalculatorView} from "../Abstract/index"
  */
 export default abstract class AbstractCalculatorController {
 
-    protected readonly _view: AbstractCalculatorView;
-    protected readonly _calculatorCore: AbstractCalculatorCore;
+    protected readonly _private__view: AbstractCalculatorView;
+    protected readonly _private__calculatorCore: AbstractCalculatorCore;
 
     protected constructor (calculatorCore: AbstractCalculatorCore, calculatorView: AbstractCalculatorView ) {
 
@@ -20,7 +21,7 @@ export default abstract class AbstractCalculatorController {
          * @private
          * @type {Object}
          */
-        this._calculatorCore = calculatorCore;
+        this._private__calculatorCore = calculatorCore;
 
         /**
          * Instance of AdvancedCalculatorView
@@ -28,15 +29,15 @@ export default abstract class AbstractCalculatorController {
          * @private
          * @type {Object}
          */
-        this._view = calculatorView;
-        this._view.render(  this._calculatorCore.getCommands() );
+        this._private__view = calculatorView;
+        this._private__view.render(  this._private__calculatorCore.getCommands() );
 
         /**
          * Events initialization
          *
          * @private
          */
-        this._initializeEvents();
+        this._private__initializeEvents();
 
     }
 
@@ -46,32 +47,32 @@ export default abstract class AbstractCalculatorController {
      * @private
      * @this {AbstractCalculatorController}
      */
-    _initializeEvents() {
-        this._view.events.subscribe( 'setDigit', this._onSetDigit.bind( this ) );
-        this._view.events.subscribe( 'setAction', this._onSetAction.bind( this ) );
-        this._view.events.subscribe( 'setUndo', this._onSetUndo.bind( this ) );
-        this._view.events.subscribe( 'setReset', this._onSetReset.bind( this ) );
+    _private__initializeEvents() {
+        this._private__view.events.subscribe( config.math.events.view.setDigit, this._private__onSetDigit.bind( this ) );
+        this._private__view.events.subscribe( config.math.events.view.setAction, this._private__onSetAction.bind( this ) );
+        this._private__view.events.subscribe( config.math.events.view.setUndo, this._private__onSetUndo.bind( this ) );
+        this._private__view.events.subscribe( config.math.events.view.setReset, this._private__onSetReset.bind( this ) );
 
-        this._calculatorCore.events.subscribe( 'changeCommands', this._onChangeCommands.bind( this ) );
+        this._private__calculatorCore.events.subscribe( config.math.events.core.changeCommands, this._private__onChangeCommands.bind( this ) );
     }
 
-    _onSetDigit( event ) {
-        this._calculatorCore.setDigit( event.value );
+    _private__onSetDigit( event ) {
+        this._private__calculatorCore.setDigit( event.value );
     }
 
-    _onSetAction( event ) {
-        this._calculatorCore.setAction( event );
+    _private__onSetAction( event ) {
+        this._private__calculatorCore.setAction( event );
     }
 
-    _onSetUndo() {
-        this._calculatorCore.setUndo();
+    _private__onSetUndo() {
+        this._private__calculatorCore.setUndo();
     }
 
-    _onSetReset() {
-        this._calculatorCore.setReset();
+    _private__onSetReset() {
+        this._private__calculatorCore.setReset();
     }
 
-    _onChangeCommands( event ) {
-        this._view.render( event );
+    _private__onChangeCommands( event ) {
+        this._private__view.render( event );
     }
 }

@@ -12,17 +12,4 @@ export default class SimpleCalculatorController extends AbstractCalculatorContro
     constructor ( calculatorCore: AbstractCalculatorCore, calculatorView: AbstractCalculatorView ) {
         super( calculatorCore, calculatorView );
     }
-
-    /**
-     * Assigning handlers
-     *
-     * @private
-     * @this {SimpleCalculatorController}
-     */
-    _initializeEvents() {
-        super._initializeEvents();
-
-        // additional functionality
-
-    }
 }
