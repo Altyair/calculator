@@ -9,102 +9,41 @@ import {AbstractCalculatorView} from '../Abstract/index';
  *
  */
 export default class AdvancedCalculatorView extends AbstractCalculatorView {
-    private _resultBlock: any;
-    private _actionsBlock: any;
-
     constructor () {
         super();
-
-        this._renderTemplate();
-
-        this._findElements();
-
-        this._initializeEvents();
     }
 
-    _renderTemplate(): void {
-        document.getElementById('calculator').innerHTML = `
-            <div class="result" style="height: 100px; padding: 10px; border-bottom: 1px solid gray"></div>
-            <div class="actions" style="display: flex; flex-wrap: wrap">
-                <div class="action digit">7</div>
-                <div class="action digit">8</div>
-                <div class="action digit">9</div>
-                <div class="action multiply">*</div>
-                <div class="action digit">4</div>
-                <div class="action digit">5</div>
-                <div class="action digit">6</div>
-                <div class="action subtract">-</div>
-                <div class="action digit">1</div>
-                <div class="action digit">2</div>
-                <div class="action digit">3</div>
-                <div class="action sum">+</div>
-            </div>`;
-    }
+    _private__setHandlers() {
+        const self = this;
 
-    _findElements(): void {
-        const calculatorRootDomElement = document.getElementById('calculator');
+        this._private__handlers = {
+            onDigit( value: string ) {
+                self.events.emit( { event: 'setDigit', message: { value }} );
+            },
 
-        this._resultBlock = calculatorRootDomElement.querySelector('.result');
-        this._actionsBlock = calculatorRootDomElement.querySelector('.actions');
-    }
+            onSubtract: ( value: string ) => {
+                self.events.emit( { event: 'setAction', message: { action: self.mathCore.subtraction, priority: 0, icon: value}} );
+            },
 
-    /**
-     * Assigning handlers
-     *
-     * @private
-     * @this {AdvancedCalculatorView}
-     */
-    _initializeEvents() {
-
-        this._actionsBlock.addEventListener('click', this._onClickAction.bind(this));
-
-    }
-
-    _onClickAction( event: any ) {
-        // переписать
-        if ( event.target.className.indexOf( 'sum' ) !== -1 ) {
-            this.events.emit( { event: 'setSumAction'} );
-        }  else if ( event.target.className.indexOf( 'multiply' ) !== -1 ) {
-            this.events.emit( { event: 'setMultiplyAction'} );
-        }  else if ( event.target.className.indexOf( 'subtract' ) !== -1 ) {
-            this.events.emit( { event: 'setSubtractAction'} );
-        }  else if ( event.target.className.indexOf( 'digit' ) !== -1 ) {
-            this.events.emit( { event: 'setDigit', message: { value: event.target.innerText }} );
-        }
-    }
-
-    render( message: any ) {
-
-        console.log( message );
-
-        let strResult: string = '';
-
-        const parse = ( commands ) => {
-
-            for ( let i = 0; i < commands.length; i++ ) {
-                const currentCommand = commands[i];
-
-                if (currentCommand.value.constructor === Array) {
-                    parse(currentCommand.value);
-
-                    if (currentCommand.hasOwnProperty('action')) {
-                        strResult += ` ${currentCommand.action.icon}`;
-                    }
-                    continue;
-                }
-
-                strResult += ` ${currentCommand.value}`;
-
-                if (currentCommand.hasOwnProperty('action')) {
-                    strResult += ` ${currentCommand.action.icon}`;
-                }
-            }
+            onMultiply: ( value: string ) => {
+                self.events.emit( { event: 'setAction', message: { action: self.mathCore.multiple, priority: 1, icon: value}} );
+            },
         };
+    }
 
-        parse( message.commands );
 
-        this._resultBlock.innerHTML = `
-            <h5>${strResult}</h5>
-            <h3>${message.result}</h3>`;
+    _private__renderTemplate(): void {
+        document.getElementById('calculator').innerHTML = `
+            <div class="result" style="height: 200px; padding: 10px; border-bottom: 3px solid #cedece"></div>
+            <div class="actions" style="display: flex; flex-wrap: wrap">
+                <div class="action" data-action="onDigit">7</div>
+                <div class="action" data-action="onDigit">8</div>
+                <div class="action" data-action="onDigit">9</div>
+                <div class="action" data-action="onMultiply">*</div>
+                <div class="action" data-action="onDigit">4</div>
+                <div class="action" data-action="onDigit">5</div>
+                <div class="action" data-action="onDigit">6</div>
+                <div class="action" data-action="onSubtract">-</div>
+            </div>`;
     }
 }
