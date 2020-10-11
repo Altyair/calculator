@@ -1,5 +1,5 @@
 import SimpleCalculatorCore_ver2 from './SimpleCalculatorCore_ver2';
 import SimpleCalculatorController from './SimpleCalculatorController';
-import SimpleCalculatorView from './SimpleCalculatorView';
+import { SimpleCalculatorEnableStateView } from './viewStates/index';
 
-export { SimpleCalculatorCore_ver2, SimpleCalculatorController, SimpleCalculatorView };
+export { SimpleCalculatorCore_ver2, SimpleCalculatorController, SimpleCalculatorEnableStateView };

@@ -4,7 +4,7 @@ import {AbstractCalculatorCore, AbstractCalculatorController, AbstractCalculator
 import {
     SimpleCalculatorCore_ver2,
     SimpleCalculatorController,
-    SimpleCalculatorView
+    SimpleCalculatorEnableStateView
 } from '../MathCalculator/SimpleCalculator/index';
 
 import {
@@ -50,7 +50,7 @@ export default class CalculatorFacade {
         if ( this._type === config.math.type.simple ) {
 
             const simpleCalculatorCore: AbstractCalculatorCore = new SimpleCalculatorCore_ver2();
-            const simpleCalculatorView: AbstractCalculatorView = new SimpleCalculatorView();
+            const simpleCalculatorView: AbstractCalculatorView = new SimpleCalculatorEnableStateView();
             calculator = new SimpleCalculatorController(simpleCalculatorCore, simpleCalculatorView);
 
         } else if ( this._type === config.math.type.advanced ) {

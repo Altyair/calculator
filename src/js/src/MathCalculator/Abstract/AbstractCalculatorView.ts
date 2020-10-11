@@ -1,6 +1,6 @@
 import {EventEmitter} from '../../EventEmitterModule/index';
 import {MathCore} from '../../MathModule/index';
-
+import AbstractCalculatorController from './AbstractCalculatorController';
 
 /**
  * Creates an instance AbstractCalculatorView
@@ -13,9 +13,11 @@ export default abstract class AbstractCalculatorView {
     public events: EventEmitter;
     public mathCore: MathCore;
 
+    protected context: AbstractCalculatorController;
+
     protected _private__handlers: any;
     private _private__resultBlock: any;
-    private _private__actionsBlock: any;
+    protected _private__actionsBlock: any;
     private _private__viewHistoryOperations: string;
 
     protected constructor () {
@@ -29,6 +31,10 @@ export default abstract class AbstractCalculatorView {
 
     }
 
+    public setContext(context: AbstractCalculatorController) {
+        this.context = context;
+    }
+
     _private__findElements(): void {
         const calculatorRootDomElement = document.getElementById('calculator');
 
@@ -40,7 +46,7 @@ export default abstract class AbstractCalculatorView {
      * Assigning handlers
      *
      * @private
-     * @this {AbstractCalculatorView}
+     * @this {SimpleCalculatorEnableStateView}
      */
     _private__initializeEvents() {
         this._private__actionsBlock.addEventListener('click', this._private__onClickAction.bind(this));
@@ -50,6 +56,16 @@ export default abstract class AbstractCalculatorView {
         const action: string = event.target.dataset.action;
 
         if (action) {
+            console.log(action);
+            console.log(this._private__handlers);
+            console.log(this._private__getHandler(action));
+
+            if (this._private__getHandler(action) === undefined) {
+                return;
+            }
+
+            console.log(7);
+
             this._private__getHandler(action)( event.target.innerText );
         }
     }
@@ -87,8 +103,8 @@ export default abstract class AbstractCalculatorView {
         this._private__resultBlock.innerHTML = `<h5>${this._private__viewHistoryOperations}</h5><h3>${message.result}</h3>`;
     }
 
-    abstract _private__setHandlers(): void;
-
     abstract _private__renderTemplate(): void;
+
+    abstract _private__setHandlers(): void;
 
 }

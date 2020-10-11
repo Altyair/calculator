@@ -1,14 +1,15 @@
-import {AbstractCalculatorView} from '../Abstract/index';
+import {AbstractCalculatorView} from '../../Abstract/index';
+import SimpleCalculatorDisableStateView from './SimpleCalculatorDisableStateView';
 
 /**
  * Creates an instance SimpleCalculatorView.
  *
  * @constructor
  * @extends {AbstractCalculatorView}
- * @this {SimpleCalculatorView}
+ * @this {SimpleCalculatorEnableStateView}
  *
  */
-export default class SimpleCalculatorView extends AbstractCalculatorView {
+export default class SimpleCalculatorEnableStateView extends AbstractCalculatorView {
 
     constructor () {
         super();
@@ -18,6 +19,10 @@ export default class SimpleCalculatorView extends AbstractCalculatorView {
         const self = this;
 
         this._private__handlers = {
+            onOff() {
+                self.context.transitionTo( new (SimpleCalculatorDisableStateView) );
+            },
+
             onDigit( value: string ) {
                 self.events.emit( { event: 'setDigit', message: { value }} );
             },
@@ -52,6 +57,10 @@ export default class SimpleCalculatorView extends AbstractCalculatorView {
         document.getElementById('calculator').innerHTML = `
             <div class="result" style="height: 100px; padding: 10px; border-bottom: 1px solid gray"></div>
             <div class="actions" style="display: flex; flex-wrap: wrap">
+                <div class="action" data-action="onOff">OFF</div>
+                <div class="action" data-action=""></div>
+                <div class="action" data-action=""></div>
+                <div class="action" data-action=""></div>
                 <div class="action" data-action="onReset">С</div>
                 <div class="action" data-action="onUndo">x</div>
                 <div class="action" data-action="onPersent">%</div>
