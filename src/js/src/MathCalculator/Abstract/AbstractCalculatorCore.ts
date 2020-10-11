@@ -24,9 +24,77 @@ export default abstract class AbstractCalculatorCore {
         this.events = new EventEmitter();
     }
 
-    abstract setDigit( value: string ): void;
-    abstract setAction( action: string ): void;
-    abstract setUndo(): void
+    setDigit( value: string ): void {
+        const setDigit = ( commands ): void => {
+            const lastItem: any = commands[commands.length - 1];
+
+            if ( lastItem.value.constructor === Array && !lastItem.hasOwnProperty('action') ) {
+                setDigit( lastItem.value );
+            } else {
+                if ( !lastItem.hasOwnProperty('action') ) {
+                    lastItem.value = !lastItem.value ? parseFloat(value) : parseFloat(lastItem.value + value);
+                } else {
+                    commands.push( { value: parseFloat( value ) } );
+                }
+            }
+        }
+
+        setDigit( this._commands );
+
+        this._calculateResultAndNotify();
+    }
+
+    setAction( actionData: any ): void {
+        const setAction = ( commands ): void => {
+            const lastItem: any = commands[commands.length - 1];
+
+            if ( lastItem.value.constructor === Array && actionData.priority !== 0) {
+                setAction( lastItem.value );
+            } else {
+                if ( actionData.priority === 0 ) {
+                    lastItem.action = actionData;
+                } else {
+                    lastItem.value = [ { value: lastItem.value, action: actionData } ]
+                }
+            }
+        }
+
+        setAction( this._commands );
+
+        this._calculateResultAndNotify();
+    }
+
+    setUndo(): void {
+        const setUndo = ( commands ): void => {
+            const lastItem: any = commands[commands.length - 1];
+
+            if ( lastItem.value.constructor === Array ) {
+                setUndo( lastItem.value );
+            } else {
+                const lastItemValue: string = String( lastItem.value );
+
+                if (  lastItem.action ) {
+                    delete lastItem.action;
+                } else if ( lastItemValue.length > 1 ) {
+                    lastItem.value = parseFloat( lastItemValue.slice(0, -1) );
+                } else if ( lastItemValue.length === 1 ) {
+                    if ( commands.length > 1 ) {
+                        commands.pop();
+                    } else {
+                        if ( this._commands.length > 1 ) {
+                            this._commands.pop();
+                        } else {
+                            this._commands = [{value: 0}];
+                        }
+                    }
+                }
+            }
+        }
+
+        setUndo( this._commands );
+
+        this._calculateResultAndNotify();
+    }
 
     setReset(): void {
         this._commands = [{value: 0}];
@@ -36,7 +104,7 @@ export default abstract class AbstractCalculatorCore {
 
     _calculateResult(): void {
         const calculate = ( data ): number => {
-            let result = data[0].value;
+            let result = data[0].value.constructor === Array ? calculate( data[0].value ) : data[0].value;
 
             data.forEach((currentCommand: any, index: number, array) => {
                 const nextCommand: any = array[index + 1];

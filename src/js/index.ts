@@ -11,10 +11,10 @@ import { CalculatorFacade } from './src/CalculatorFacade/index';
 class Application {
 
     main() {
-      this._createCalculator();
+      Application._createCalculator();
     }
 
-    _createCalculator(): void {
+    private static _createCalculator(): void {
         const calculator = new CalculatorFacade({type: config.math.type.simple});
         calculator.create();
     }
@@ -22,4 +22,4 @@ class Application {
 }
 
 const application = new Application();
-application.main();
+application.main()

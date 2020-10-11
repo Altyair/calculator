@@ -13,7 +13,7 @@ export default class AdvancedCalculatorView extends AbstractCalculatorView {
         super();
     }
 
-    _private__setHandlers() {
+    public _private__setHandlers() {
         const self = this;
 
         this._private__handlers = {
