@@ -30,7 +30,7 @@ export default abstract class AbstractCalculatorController {
          *
          * @private
          */
-        this._private__initializeEvents();
+        // this._private__initializeEvents();
 
     }
 
@@ -39,8 +39,9 @@ export default abstract class AbstractCalculatorController {
      */
     public transitionTo(state: AbstractCalculatorView): void {
         this._private__viewState = state;
+        this._private__initializeEvents();
 
-        this._private__viewState.render( this._private__calculatorCore.getCommands() );
+        this._private__calculatorCore.setReset();
         this._private__viewState.setContext(this);
     }
 

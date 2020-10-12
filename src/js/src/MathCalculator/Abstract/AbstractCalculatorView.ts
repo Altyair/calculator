@@ -56,15 +56,9 @@ export default abstract class AbstractCalculatorView {
         const action: string = event.target.dataset.action;
 
         if (action) {
-            console.log(action);
-            console.log(this._private__handlers);
-            console.log(this._private__getHandler(action));
-
             if (this._private__getHandler(action) === undefined) {
                 return;
             }
-
-            console.log(7);
 
             this._private__getHandler(action)( event.target.innerText );
         }
