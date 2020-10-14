@@ -23,10 +23,10 @@ export default class AdvancedCalculatorView extends AbstractCalculatorView {
         this._private__actionsBlock.addEventListener('click', this._private__onClickAction.bind(this));
     }
 
-    public _private__setHandlers() {
+    public _protected__setHandlers() {
         const self = this;
 
-        this._private__handlers = {
+        this._protected__handlers = {
             onDigit( value: string ) {
                 self.events.emit( { event: 'setDigit', message: { value }} );
             },
@@ -42,7 +42,7 @@ export default class AdvancedCalculatorView extends AbstractCalculatorView {
     }
 
 
-    _private__renderTemplate(): void {
+    _protected__renderTemplate(): void {
         document.getElementById('calculator').innerHTML = `
             <div class="result" style="height: 200px; padding: 10px; border-bottom: 3px solid #cedece"></div>
             <div class="actions" style="display: flex; flex-wrap: wrap">

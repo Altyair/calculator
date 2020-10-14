@@ -15,10 +15,10 @@ export default class SimpleCalculatorEnableStateView extends AbstractCalculatorV
         super();
     }
 
-    _private__setHandlers() {
+    _protected__setHandlers() {
         const self = this;
 
-        this._private__handlers = {
+        this._protected__handlers = {
             onOff() {
                 self.context.transitionTo( new (SimpleCalculatorDisableStateView) );
             },
@@ -53,7 +53,7 @@ export default class SimpleCalculatorEnableStateView extends AbstractCalculatorV
         };
     }
 
-    _private__renderTemplate(): void {
+    _protected__renderTemplate(): void {
         document.getElementById('calculator').innerHTML = `
             <div class="result" style="height: 100px; padding: 10px; border-bottom: 1px solid gray"></div>
             <div class="actions" style="display: flex; flex-wrap: wrap">

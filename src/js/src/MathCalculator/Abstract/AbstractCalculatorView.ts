@@ -15,18 +15,18 @@ export default abstract class AbstractCalculatorView {
 
     protected context: AbstractCalculatorController;
 
-    protected _private__handlers: any;
-    private _private__resultBlock: any;
+    protected _protected__handlers: any;
+    protected _private__resultBlock: any;
     protected _private__actionsBlock: any;
-    private _private__viewHistoryOperations: string;
+    protected _private__viewHistoryOperations: string;
 
     protected constructor () {
         this.events = new EventEmitter();
         this.mathCore = new MathCore();
 
-        this._private__renderTemplate();
+        this._protected__renderTemplate();
         this._private__findElements();
-        this._private__setHandlers();
+        this._protected__setHandlers();
         this._private__initializeEvents();
 
     }
@@ -65,7 +65,7 @@ export default abstract class AbstractCalculatorView {
     }
 
     _private__getHandler(action: string): any {
-        return this._private__handlers[action];
+        return this._protected__handlers[action];
     }
 
     render( message: any ) {
@@ -99,8 +99,8 @@ export default abstract class AbstractCalculatorView {
         this._private__resultBlock.innerHTML = `<h5>${this._private__viewHistoryOperations}</h5><h3>${message.result}</h3>`;
     }
 
-    abstract _private__renderTemplate(): void;
+    abstract _protected__renderTemplate(): void;
 
-    abstract _private__setHandlers(): void;
+    abstract _protected__setHandlers(): void;
 
 }
