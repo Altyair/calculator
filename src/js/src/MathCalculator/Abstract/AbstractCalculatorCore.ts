@@ -45,16 +45,27 @@ export default abstract class AbstractCalculatorCore {
     }
 
     setAction( actionData: any ): void {
+        let priority: number = 0;
+
         const setAction = ( commands ): void => {
             const lastItem: any = commands[commands.length - 1];
 
-            if ( lastItem.value.constructor === Array && actionData.priority !== 0) {
+            if ( lastItem.value.constructor === Array && actionData.priority !== priority) {
+                priority ++;
+
                 setAction( lastItem.value );
             } else {
-                if ( actionData.priority === 0 ) {
-                    lastItem.action = actionData;
+
+                if (commands.length > 1) {
+
+                    if (commands[commands.length - 2].action.priority < actionData.priority) {
+                        lastItem.value = [ { value: lastItem.value, action: actionData } ]
+                    } else {
+                        lastItem.action = actionData;
+                    }
+
                 } else {
-                    lastItem.value = [ { value: lastItem.value, action: actionData } ]
+                    lastItem.action = actionData;
                 }
             }
         }
