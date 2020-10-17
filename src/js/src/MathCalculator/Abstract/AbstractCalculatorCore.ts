@@ -47,19 +47,31 @@ export default abstract class AbstractCalculatorCore {
     setAction( actionData: any ): void {
         let priority: number = 0;
 
-        const setAction = ( commands ): void => {
+        const setAction = ( commands ): boolean => {
             const lastItem: any = commands[commands.length - 1];
 
-            if ( lastItem.value.constructor === Array && actionData.priority !== priority) {
+            if ( lastItem.value.constructor === Array) {
                 priority ++;
 
-                setAction( lastItem.value );
+                if (!setAction( lastItem.value)) {
+                    lastItem.action = actionData;
+                }
             } else {
 
-                if (commands.length > 1) {
+                if (commands.length > 0) {
 
-                    if (commands[commands.length - 2].action.priority < actionData.priority) {
-                        lastItem.value = [ { value: lastItem.value, action: actionData } ]
+                    if (commands.length > 1 && commands[commands.length - 2].action.priority === 0 && actionData.priority === 1) {
+                        lastItem.value = [{value: lastItem.value, action: actionData}];
+                    } else if (commands.length > 1 && commands[commands.length - 2].action && commands[commands.length - 2].action.priority === 1 && actionData.priority === 0) {
+                        console.log(1);
+
+                        return false;
+                    } else if (commands[commands.length - 1].action && commands[commands.length - 1].action.priority === 1 && actionData.priority === 0) {
+                        if (actionData.icon === '+') {
+
+                        } else if (actionData.icon === '-') {
+                            commands.push({value: '-'});
+                        }
                     } else {
                         lastItem.action = actionData;
                     }
@@ -67,6 +79,8 @@ export default abstract class AbstractCalculatorCore {
                 } else {
                     lastItem.action = actionData;
                 }
+
+                return true;
             }
         }
 
@@ -121,7 +135,11 @@ export default abstract class AbstractCalculatorCore {
                 const nextCommand: any = array[index + 1];
 
                 if ( currentCommand.action && nextCommand ) {
-                    const operand2 = nextCommand.value.constructor === Array ? calculate( nextCommand.value ) : nextCommand.value;
+                    let operand2 = nextCommand.value.constructor === Array ? calculate( nextCommand.value ) : nextCommand.value;
+
+                    if (operand2 === '-') {
+                        operand2 = 1;
+                    }
 
                     result = currentCommand.action.action( result, operand2 );
                 }
