@@ -1,3 +1,4 @@
+import config from '../../../config/default';
 import {EventEmitter} from "../../EventEmitterModule/index";
 
 /**
@@ -45,7 +46,6 @@ export default abstract class AbstractCalculatorCore {
     }
 
     setAction( actionData: any ): void {
-
         const setAction = ( commands ): boolean => {
             const lastItem: any = commands[commands.length - 1];
 
@@ -55,18 +55,16 @@ export default abstract class AbstractCalculatorCore {
                 }
             } else {
                 if (commands.length > 0) {
-                    if (commands.length > 1 && commands[commands.length - 2].action.priority === 0 && actionData.priority === 1) {
+                    if (commands.length > 1 && commands[commands.length - 2].action.priority < actionData.priority) {
                         lastItem.value = [{value: lastItem.value, action: actionData}];
                     }
                     else if (commands[commands.length - 1].action && commands[commands.length - 1].action.priority === 1 && actionData.priority === 0) {
-                        if (actionData.icon === '+') {
-
-                        } else if (actionData.icon === '-') {
+                        if (actionData.operator === config.math.operators.subtract) {
                             commands.push({value: '-'});
                         }
                         return true;
                     }
-                    else if (commands.length > 1 && commands[commands.length - 2].action && commands[commands.length - 2].action.priority === 1 && actionData.priority === 0) {
+                    else if (commands.length > 1 && commands[commands.length - 2].action.priority > actionData.priority) {
                         return false;
                     } else {
                         lastItem.action = actionData;
@@ -75,9 +73,10 @@ export default abstract class AbstractCalculatorCore {
                 } else {
                     lastItem.action = actionData;
                 }
-
-                return true;
             }
+
+            return true;
+
         }
 
         if (!setAction( this._commands )) {

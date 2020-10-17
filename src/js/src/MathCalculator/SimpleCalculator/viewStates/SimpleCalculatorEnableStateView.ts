@@ -1,3 +1,5 @@
+import config from '../../../../config/default';
+
 import {AbstractCalculatorView} from '../../Abstract/index';
 import SimpleCalculatorDisableStateView from './SimpleCalculatorDisableStateView';
 
@@ -24,31 +26,31 @@ export default class SimpleCalculatorEnableStateView extends AbstractCalculatorV
             },
 
             onDigit( value: string ) {
-                self.events.emit( { event: 'setDigit', message: { value }} );
+                self.events.emit( { event: config.math.events.view.setDigit, message: { value }} );
             },
 
             onAdd: ( value: string ) => {
-                self.events.emit( { event: 'setAction', message: { action: self.mathCore.sum, priority: 0, icon: value}} );
+                self.events.emit( { event: config.math.events.view.setAction, message: { action: self.mathCore.sum, priority: 0, icon: value, operator: config.math.operators.add}} );
             },
 
             onSubtract: ( value: string ) => {
-                self.events.emit( { event: 'setAction', message: { action: self.mathCore.subtraction, priority: 0, icon: value}} );
+                self.events.emit( { event: config.math.events.view.setAction, message: { action: self.mathCore.subtraction, priority: 0, icon: value, operator: config.math.operators.subtract}} );
             },
 
             onMultiply: ( value: string ) => {
-                self.events.emit( { event: 'setAction', message: { action: self.mathCore.multiple, priority: 1, icon: value}} );
+                self.events.emit( { event: config.math.events.view.setAction, message: { action: self.mathCore.multiple, priority: 1, icon: value, operator: config.math.operators.multiply}} );
             },
 
             onDivide: ( value: string ) => {
-                self.events.emit( { event: 'setAction', message: { action: self.mathCore.division, priority: 1, icon: value}} );
+                self.events.emit( { event: config.math.events.view.setAction, message: { action: self.mathCore.division, priority: 1, icon: value, operator: config.math.operators.divide}} );
             },
 
             onUndo: () => {
-                self.events.emit( { event: 'setUndo'} );
+                self.events.emit( { event: config.math.events.view.setUndo} );
             },
 
             onReset: () => {
-                self.events.emit( { event: 'setReset'} );
+                self.events.emit( { event: config.math.events.view.setReset} );
             }
         };
     }

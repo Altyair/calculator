@@ -14,6 +14,12 @@ export default {
       core: {
         changeCommands: "changeCommands"
       }
+    },
+    operators: {
+      add: 'add',
+      subtract: 'subtract',
+      multiply: 'multiply',
+      divide: 'divide'
     }
   }
 }
