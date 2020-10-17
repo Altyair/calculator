@@ -45,33 +45,29 @@ export default abstract class AbstractCalculatorCore {
     }
 
     setAction( actionData: any ): void {
-        let priority: number = 0;
 
         const setAction = ( commands ): boolean => {
             const lastItem: any = commands[commands.length - 1];
 
             if ( lastItem.value.constructor === Array) {
-                priority ++;
-
                 if (!setAction( lastItem.value)) {
                     lastItem.action = actionData;
                 }
             } else {
-
                 if (commands.length > 0) {
-
                     if (commands.length > 1 && commands[commands.length - 2].action.priority === 0 && actionData.priority === 1) {
                         lastItem.value = [{value: lastItem.value, action: actionData}];
-                    } else if (commands.length > 1 && commands[commands.length - 2].action && commands[commands.length - 2].action.priority === 1 && actionData.priority === 0) {
-                        console.log(1);
-
-                        return false;
-                    } else if (commands[commands.length - 1].action && commands[commands.length - 1].action.priority === 1 && actionData.priority === 0) {
+                    }
+                    else if (commands[commands.length - 1].action && commands[commands.length - 1].action.priority === 1 && actionData.priority === 0) {
                         if (actionData.icon === '+') {
 
                         } else if (actionData.icon === '-') {
                             commands.push({value: '-'});
                         }
+                        return true;
+                    }
+                    else if (commands.length > 1 && commands[commands.length - 2].action && commands[commands.length - 2].action.priority === 1 && actionData.priority === 0) {
+                        return false;
                     } else {
                         lastItem.action = actionData;
                     }
@@ -84,7 +80,9 @@ export default abstract class AbstractCalculatorCore {
             }
         }
 
-        setAction( this._commands );
+        if (!setAction( this._commands )) {
+            this._commands[this._commands.length - 1].action = actionData;
+        }
 
         this._calculateResultAndNotify();
     }

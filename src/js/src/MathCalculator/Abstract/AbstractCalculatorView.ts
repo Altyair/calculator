@@ -86,7 +86,8 @@ export default abstract class AbstractCalculatorView {
                     continue;
                 }
 
-                this._private__viewHistoryOperations += ` ${currentCommand.value}`;
+                const valueFormat: string = typeof currentCommand.value === "number" && currentCommand.value < 0 ? ` (${currentCommand.value})` : ` ${currentCommand.value}`;
+                this._private__viewHistoryOperations += valueFormat;
 
                 if (currentCommand.hasOwnProperty('action')) {
                     this._private__viewHistoryOperations += ` ${currentCommand.action.icon}`;
