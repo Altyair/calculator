@@ -11,8 +11,8 @@ import {EventEmitter} from "../../EventEmitterModule/index";
 export default abstract class AbstractCalculatorCore {
     public events: EventEmitter;
 
-    protected _commands: any[] = [{ value: 0 }];
-    protected _result: number = 0;
+    private _private__commands: any[] = [{ value: 0 }];
+    private _private__result: number = 0;
 
     protected constructor () {
 
@@ -25,6 +25,12 @@ export default abstract class AbstractCalculatorCore {
         this.events = new EventEmitter();
     }
 
+    /**
+     * Set digit value
+     *
+     * @public
+     * @this {AbstractCalculatorCore}
+     */
     setDigit( value: string ): void {
         const setDigit = ( commands ): void => {
             const lastItem: any = commands[commands.length - 1];
@@ -40,11 +46,17 @@ export default abstract class AbstractCalculatorCore {
             }
         }
 
-        setDigit( this._commands );
+        setDigit( this._private__commands );
 
         this._calculateResultAndNotify();
     }
 
+    /**
+     * Set action value
+     *
+     * @public
+     * @this {AbstractCalculatorCore}
+     */
     setAction( actionData: any ): void {
         const setAction = ( commands ): boolean => {
             const lastItem: any = commands[commands.length - 1];
@@ -79,13 +91,19 @@ export default abstract class AbstractCalculatorCore {
 
         }
 
-        if (!setAction( this._commands )) {
-            this._commands[this._commands.length - 1].action = actionData;
+        if (!setAction( this._private__commands )) {
+            this._private__commands[this._private__commands.length - 1].action = actionData;
         }
 
         this._calculateResultAndNotify();
     }
 
+    /**
+     * Set undo
+     *
+     * @public
+     * @this {AbstractCalculatorCore}
+     */
     setUndo(): void {
         const setUndo = ( commands ): void => {
             const lastItem: any = commands[commands.length - 1];
@@ -103,28 +121,34 @@ export default abstract class AbstractCalculatorCore {
                     if ( commands.length > 1 ) {
                         commands.pop();
                     } else {
-                        if ( this._commands.length > 1 ) {
-                            this._commands.pop();
+                        if ( this._private__commands.length > 1 ) {
+                            this._private__commands.pop();
                         } else {
-                            this._commands = [{value: 0}];
+                            this._private__commands = [{value: 0}];
                         }
                     }
                 }
             }
         }
 
-        setUndo( this._commands );
+        setUndo( this._private__commands );
 
         this._calculateResultAndNotify();
     }
 
+    /**
+     * Set reset
+     *
+     * @public
+     * @this {AbstractCalculatorCore}
+     */
     setReset(): void {
-        this._commands = [{value: 0}];
+        this._private__commands = [{value: 0}];
 
         this._calculateResultAndNotify();
     }
 
-    _calculateResult(): void {
+    _private__calculateResult(): void {
         const calculate = ( data ): number => {
             let result = data[0].value.constructor === Array ? calculate( data[0].value ) : data[0].value;
 
@@ -145,15 +169,16 @@ export default abstract class AbstractCalculatorCore {
             return result;
         }
 
-        this._result = calculate( this._commands );
+        this._private__result = calculate( this._private__commands );
     }
 
     _calculateResultAndNotify(): void {
-        this._calculateResult();
-        this.events.emit( { event: 'changeCommands', message: { commands: this._commands, result: this._result  }} );
+        this._private__calculateResult();
+
+        this.events.emit( { event: 'changeCommands', message: { commands: this._private__commands, result: this._private__result  }} );
     }
 
     getCommands(): any {
-        return { commands: this._commands, result: this._result  }
+        return { commands: this._private__commands, result: this._private__result  }
     }
 }
