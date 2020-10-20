@@ -22,4 +22,4 @@ class Application {
 }
 
 const application = new Application();
-application.main()
+application.main();

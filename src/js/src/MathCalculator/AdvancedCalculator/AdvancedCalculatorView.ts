@@ -1,4 +1,5 @@
 import {AbstractCalculatorView} from '../Abstract/index';
+import config from "../../../config/default";
 
 /**
  * Creates an instance AdvancedCalculatorView.
@@ -22,15 +23,14 @@ export default class AdvancedCalculatorView extends AbstractCalculatorView {
             },
 
             onSubtract: ( value: string ) => {
-                self.events.emit( { event: 'setAction', message: { action: self.mathCore.subtraction, priority: 0, icon: value}} );
+                self.events.emit( { event: config.math.events.view.setAction, message: { action: self.mathCore.subtraction, priority: 0, icon: value, operator: config.math.operators.subtract}} );
             },
 
             onMultiply: ( value: string ) => {
-                self.events.emit( { event: 'setAction', message: { action: self.mathCore.multiple, priority: 1, icon: value}} );
+                self.events.emit( { event: config.math.events.view.setAction, message: { action: self.mathCore.multiple, priority: 1, icon: value, operator: config.math.operators.multiply}} );
             },
         };
     }
-
 
     _protected__renderTemplate(): void {
         document.getElementById('calculator').innerHTML = `
