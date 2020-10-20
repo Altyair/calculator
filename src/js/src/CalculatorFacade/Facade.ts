@@ -26,7 +26,7 @@ interface IOptions {
  */
 export default class CalculatorFacade {
 
-    private readonly _type: string;
+    private readonly _private__type: string;
 
     /**
      * Initializing the constructor
@@ -42,18 +42,18 @@ export default class CalculatorFacade {
          * @private
          * @type {string}
          */
-        this._type = options.type;
+        this._private__type = options.type;
     }
 
     create() {
         let calculator: AbstractCalculatorController;
-        if ( this._type === config.math.type.simple ) {
+        if ( this._private__type === config.math.type.simple ) {
 
             const simpleCalculatorCore: AbstractCalculatorCore = new SimpleCalculatorCore_ver2();
             const simpleCalculatorView: AbstractCalculatorView = new SimpleCalculatorEnableStateView();
             calculator = new SimpleCalculatorController(simpleCalculatorCore, simpleCalculatorView);
 
-        } else if ( this._type === config.math.type.advanced ) {
+        } else if ( this._private__type === config.math.type.advanced ) {
 
             const advancedCalculatorCore: AbstractCalculatorCore = new AdvancedCalculatorCore();
             const advancedCalculatorView: AbstractCalculatorView = new AdvancedCalculatorView();

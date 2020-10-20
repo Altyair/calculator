@@ -16,9 +16,9 @@ export default abstract class AbstractCalculatorView {
     protected context: AbstractCalculatorController;
 
     protected _protected__handlers: any;
-    protected _private__resultBlock: any;
-    protected _private__actionsBlock: any;
-    protected _private__viewHistoryOperations: string;
+    protected _protected__resultBlock: any;
+    private _private__actionsBlock: any;
+    private _private__viewHistoryOperations: string;
 
     protected constructor () {
         this.events = new EventEmitter();
@@ -38,7 +38,7 @@ export default abstract class AbstractCalculatorView {
     _private__findElements(): void {
         const calculatorRootDomElement = document.getElementById('calculator');
 
-        this._private__resultBlock = calculatorRootDomElement.querySelector('.result');
+        this._protected__resultBlock = calculatorRootDomElement.querySelector('.result');
         this._private__actionsBlock = calculatorRootDomElement.querySelector('.actions');
     }
 
@@ -97,7 +97,7 @@ export default abstract class AbstractCalculatorView {
 
         parse( message.commands );
 
-        this._private__resultBlock.innerHTML = `<h5>${this._private__viewHistoryOperations}</h5><h3>${message.result}</h3>`;
+        this._protected__resultBlock.innerHTML = `<h5>${this._private__viewHistoryOperations}</h5><h3>${message.result}</h3>`;
     }
 
     abstract _protected__renderTemplate(): void;

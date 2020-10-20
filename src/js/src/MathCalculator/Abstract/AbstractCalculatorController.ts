@@ -16,7 +16,7 @@ export default abstract class AbstractCalculatorController {
     protected constructor (calculatorCore: AbstractCalculatorCore, calculatorView: AbstractCalculatorView ) {
 
         /**
-         * Instance of AdvancedCalculatorCore
+         * Instance of AbstractCalculatorCore
          *
          * @private
          * @type {Object}
@@ -24,13 +24,6 @@ export default abstract class AbstractCalculatorController {
         this._private__calculatorCore = calculatorCore;
 
         this.transitionTo(calculatorView);
-
-        /**
-         * Events initialization
-         *
-         * @private
-         */
-        // this._private__initializeEvents();
 
     }
 
@@ -60,23 +53,23 @@ export default abstract class AbstractCalculatorController {
         this._private__calculatorCore.events.subscribe( config.math.events.core.changeCommands, this._private__onChangeCommands.bind( this ) );
     }
 
-    _private__onSetDigit( event ) {
+    _private__onSetDigit( event ): void {
         this._private__calculatorCore.setDigit( event.value );
     }
 
-    _private__onSetAction( event ) {
+    _private__onSetAction( event ): void {
         this._private__calculatorCore.setAction( event );
     }
 
-    _private__onSetUndo() {
+    _private__onSetUndo(): void {
         this._private__calculatorCore.setUndo();
     }
 
-    _private__onSetReset() {
+    _private__onSetReset(): void {
         this._private__calculatorCore.setReset();
     }
 
-    _private__onChangeCommands( event ) {
+    _private__onChangeCommands( event ): void {
         this._private__viewState.render( event );
     }
 }

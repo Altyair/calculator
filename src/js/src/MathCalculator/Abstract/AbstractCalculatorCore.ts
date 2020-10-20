@@ -48,7 +48,7 @@ export default abstract class AbstractCalculatorCore {
 
         setDigit( this._private__commands );
 
-        this._calculateResultAndNotify();
+        this._private__calculateResultAndNotify();
     }
 
     /**
@@ -95,7 +95,7 @@ export default abstract class AbstractCalculatorCore {
             this._private__commands[this._private__commands.length - 1].action = actionData;
         }
 
-        this._calculateResultAndNotify();
+        this._private__calculateResultAndNotify();
     }
 
     /**
@@ -133,7 +133,7 @@ export default abstract class AbstractCalculatorCore {
 
         setUndo( this._private__commands );
 
-        this._calculateResultAndNotify();
+        this._private__calculateResultAndNotify();
     }
 
     /**
@@ -145,7 +145,7 @@ export default abstract class AbstractCalculatorCore {
     setReset(): void {
         this._private__commands = [{value: 0}];
 
-        this._calculateResultAndNotify();
+        this._private__calculateResultAndNotify();
     }
 
     _private__calculateResult(): void {
@@ -172,7 +172,7 @@ export default abstract class AbstractCalculatorCore {
         this._private__result = calculate( this._private__commands );
     }
 
-    _calculateResultAndNotify(): void {
+    _private__calculateResultAndNotify(): void {
         this._private__calculateResult();
 
         this.events.emit( { event: 'changeCommands', message: { commands: this._private__commands, result: this._private__result  }} );

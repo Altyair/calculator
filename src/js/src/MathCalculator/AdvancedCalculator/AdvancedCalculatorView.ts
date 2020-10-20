@@ -13,16 +13,6 @@ export default class AdvancedCalculatorView extends AbstractCalculatorView {
         super();
     }
 
-    /**
-     * Assigning handlers
-     *
-     * @private
-     * @this {SimpleCalculatorEnableStateView}
-     */
-    _private__initializeEvents() {
-        this._private__actionsBlock.addEventListener('click', this._private__onClickAction.bind(this));
-    }
-
     public _protected__setHandlers() {
         const self = this;
 

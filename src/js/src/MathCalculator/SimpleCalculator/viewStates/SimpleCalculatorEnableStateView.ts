@@ -81,5 +81,4 @@ export default class SimpleCalculatorEnableStateView extends AbstractCalculatorV
                 <div class="action" data-action="onAdd">+</div>
             </div>`;
     }
-
 }

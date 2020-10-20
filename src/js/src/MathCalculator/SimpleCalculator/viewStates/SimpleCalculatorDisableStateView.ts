@@ -19,7 +19,7 @@ export default class SimpleCalculatorDisableStateView extends AbstractCalculator
         const self = this;
 
         this._protected__handlers = {
-            onActivate() {
+            onActivate(): void {
                 self.context.transitionTo( new SimpleCalculatorEnableStateView() );
             }
         }
@@ -55,7 +55,7 @@ export default class SimpleCalculatorDisableStateView extends AbstractCalculator
     }
 
     render( message: any ) {
-        this._private__resultBlock.innerHTML = `<h2>Calculator is OFF</h2>`;
+        this._protected__resultBlock.innerHTML = `<h2>Calculator is OFF</h2>`;
     }
 
 }
