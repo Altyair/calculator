@@ -27,8 +27,8 @@ export default class SimpleCalculatorDisableStateView extends AbstractCalculator
 
     _protected__renderTemplate(): void {
         document.getElementById('calculator').innerHTML = `
-            <div class="result" style="height: 100px; padding: 10px; border-bottom: 1px solid gray"></div>
-            <div class="actions" style="display: flex; flex-wrap: wrap;">
+            <div class="result"></div>
+            <div class="actions">
                 <div class="action" data-action="onActivate">On</div>
                 <div class="action" data-action=""></div>
                 <div class="action" data-action=""></div>
