@@ -80,10 +80,14 @@ export default abstract class AbstractCalculatorView {
                 if (currentCommand.value.constructor === Array) {
                     parse(currentCommand.value);
 
-                    if (currentCommand.hasOwnProperty('action')) {
+                    if (currentCommand.hasOwnProperty('action') && currentCommand.action.action) {
                         this._private__viewHistoryOperations += ` ${currentCommand.action.icon}`;
                     }
                     continue;
+                }
+
+                if (currentCommand.openGroup) {
+                    this._private__viewHistoryOperations += ` [`;
                 }
 
                 const valueFormat: string = typeof currentCommand.value === "number" && currentCommand.value < 0 ? ` (${currentCommand.value})` : ` ${currentCommand.value}`;
@@ -91,6 +95,10 @@ export default abstract class AbstractCalculatorView {
 
                 if (currentCommand.hasOwnProperty('action')) {
                     this._private__viewHistoryOperations += ` ${currentCommand.action.icon}`;
+                }
+
+                if (currentCommand.closeGroup) {
+                    this._private__viewHistoryOperations += ` ]`;
                 }
             }
         };

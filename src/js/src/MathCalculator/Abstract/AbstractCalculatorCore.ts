@@ -65,15 +65,29 @@ export default abstract class AbstractCalculatorCore {
         const setAction = ( commands ): boolean => {
             const lastItem: any = commands[commands.length - 1];
 
+            if (lastItem.action && actionData.operator !== config.math.operators.openGroup && actionData.operator !== config.math.operators.closeGroup) {
+                lastItem.action = actionData;
+                return true;
+            }
+
             if ( lastItem.value.constructor === Array) {
                 if (!setAction( lastItem.value)) {
-                    lastItem.action = actionData;
+                    if (actionData.operator === config.math.operators.closeGroup) {
+                        lastItem.action = {action: 'empty'};
+                        return false;
+                    } else {
+                        lastItem.action = actionData;
+                    }
                 }
             } else {
                 if (commands.length > 0) {
+                    if (actionData.operator === config.math.operators.closeGroup) {
+                        lastItem.closeGroup = true;
+                        return false;
+                    }
 
-                    if (commands[commands.length - 1].action && actionData.operator === config.math.operators.group) {
-                        commands.push({value: [{value: ''}]});
+                    if (commands[commands.length - 1].action && actionData.operator === config.math.operators.openGroup) {
+                        commands.push({value: [{value: '', openGroup: true}]});
 
                         return true;
                     }
@@ -160,7 +174,7 @@ export default abstract class AbstractCalculatorCore {
 
     _private__calculateResult(): void {
         const calculate = ( data ): number => {
-            let result = data[0].value.constructor === Array ? calculate( data[0].value ) : ['-', ''].indexOf(data[0].value) !== -1 ? 1 : data[0].value;
+            let result = data[0].value.constructor === Array ? calculate( data[0].value ) : ['-', '', 'empty'].indexOf(data[0].value) !== -1 ? 1 : data[0].value;
 
             data.forEach((currentCommand: any, index: number, array) => {
                 const nextCommand: any = array[index + 1];
