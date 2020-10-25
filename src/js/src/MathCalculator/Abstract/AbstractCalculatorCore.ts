@@ -36,7 +36,11 @@ export default abstract class AbstractCalculatorCore {
             const lastItem: any = commands[commands.length - 1];
 
             if ( lastItem.value.constructor === Array && !lastItem.hasOwnProperty('action') ) {
-                setDigit( lastItem.value );
+                if (!lastItem.value.length) {
+                    commands.push( { value: parseFloat( value ) } );
+                } else {
+                    setDigit( lastItem.value );
+                }
             } else {
                 if ( !lastItem.hasOwnProperty('action') ) {
                     lastItem.value = !lastItem.value ? parseFloat(value) : parseFloat(lastItem.value + value);
@@ -69,7 +73,7 @@ export default abstract class AbstractCalculatorCore {
                 if (commands.length > 0) {
 
                     if (commands[commands.length - 1].action && actionData.operator === config.math.operators.group) {
-                        commands.push({value: [{value: 1}]});
+                        commands.push({value: [{value: ''}]});
 
                         return true;
                     }
@@ -156,7 +160,7 @@ export default abstract class AbstractCalculatorCore {
 
     _private__calculateResult(): void {
         const calculate = ( data ): number => {
-            let result = data[0].value.constructor === Array ? calculate( data[0].value ) : data[0].value;
+            let result = data[0].value.constructor === Array ? calculate( data[0].value ) : ['-', ''].indexOf(data[0].value) !== -1 ? 1 : data[0].value;
 
             data.forEach((currentCommand: any, index: number, array) => {
                 const nextCommand: any = array[index + 1];
