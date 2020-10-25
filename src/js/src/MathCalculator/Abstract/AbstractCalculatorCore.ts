@@ -65,8 +65,12 @@ export default abstract class AbstractCalculatorCore {
         const setAction = ( commands ): boolean => {
             const lastItem: any = commands[commands.length - 1];
 
-            if (lastItem.action && actionData.operator !== config.math.operators.openGroup && actionData.operator !== config.math.operators.closeGroup) {
-                lastItem.action = actionData;
+            if (lastItem.action && actionData.operator !== config.math.operators.openGroup) {
+                if (actionData.operator === config.math.operators.closeGroup) {
+                    lastItem.closeGroup = true;
+                } else {
+                    lastItem.action = actionData;
+                }
                 return true;
             }
 
@@ -74,7 +78,7 @@ export default abstract class AbstractCalculatorCore {
                 if (!setAction( lastItem.value)) {
                     if (actionData.operator === config.math.operators.closeGroup) {
                         lastItem.action = {action: 'empty'};
-                        return false;
+                        return true;
                     } else {
                         lastItem.action = actionData;
                     }
@@ -82,7 +86,9 @@ export default abstract class AbstractCalculatorCore {
             } else {
                 if (commands.length > 0) {
                     if (actionData.operator === config.math.operators.closeGroup) {
-                        lastItem.closeGroup = true;
+                        if (!lastItem.closeGroup) {
+                            lastItem.closeGroup = true;
+                        }
                         return false;
                     }
 
