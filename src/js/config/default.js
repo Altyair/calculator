@@ -9,7 +9,8 @@ export default {
         setDigit: "setDigit",
         setAction: "setAction",
         setUndo: "setUndo",
-        setReset: "setReset"
+        setReset: "setReset",
+        setGroup: "setGroup"
       },
       core: {
         changeCommands: "changeCommands"
@@ -19,7 +20,8 @@ export default {
       add: 'add',
       subtract: 'subtract',
       multiply: 'multiply',
-      divide: 'divide'
+      divide: 'divide',
+      group: 'group'
     }
   }
 }

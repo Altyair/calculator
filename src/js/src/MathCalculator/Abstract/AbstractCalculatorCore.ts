@@ -67,7 +67,13 @@ export default abstract class AbstractCalculatorCore {
                 }
             } else {
                 if (commands.length > 0) {
-                    if (commands.length > 1 && commands[commands.length - 2].action.priority < actionData.priority) {
+
+                    if (commands[commands.length - 1].action && actionData.operator === config.math.operators.group) {
+                        commands.push({value: [{value: 1}]});
+
+                        return true;
+                    }
+                    else if (commands.length > 1 && commands[commands.length - 2].action.priority < actionData.priority) {
                         lastItem.value = [{value: lastItem.value, action: actionData}];
                     }
                     else if (commands[commands.length - 1].action && commands[commands.length - 1].action.priority === 1 && actionData.priority === 0) {

@@ -45,6 +45,10 @@ export default class SimpleCalculatorEnableStateView extends AbstractCalculatorV
                 self.events.emit( { event: config.math.events.view.setAction, message: { action: self.mathCore.division, priority: 1, icon: value, operator: config.math.operators.divide}} );
             },
 
+            onGroup: ( value: string ) => {
+                self.events.emit( { event: config.math.events.view.setAction, message: { action: '', priority: 1, icon: value, operator: config.math.operators.group}} );
+            },
+
             onUndo: () => {
                 self.events.emit( { event: config.math.events.view.setUndo} );
             },
@@ -62,7 +66,7 @@ export default class SimpleCalculatorEnableStateView extends AbstractCalculatorV
                 <div class="action" data-action="onOff">OFF</div>
                 <div class="action" data-action=""></div>
                 <div class="action" data-action=""></div>
-                <div class="action" data-action=""></div>
+                <div class="action" data-action="onGroup">[]</div>
                 <div class="action" data-action="onReset">С</div>
                 <div class="action" data-action="onUndo">x</div>
                 <div class="action" data-action="onPersent">%</div>
