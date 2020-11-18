@@ -65,54 +65,92 @@ export default abstract class AbstractCalculatorCore {
         const setAction = ( commands ): boolean => {
             const lastItem: any = commands[commands.length - 1];
 
-            if (lastItem.action && actionData.operator !== config.math.operators.openGroup) {
-                if (actionData.operator === config.math.operators.closeGroup) {
-                    lastItem.closeGroup = true;
-                } else {
-                    lastItem.action = actionData;
+            if (lastItem.hasOwnProperty('action')) {
+                if (actionData.operator === config.math.operators.openGroup) {
+                    commands.push({openGroup: true, value: [{value: ''}]});
+                    return true;
+
                 }
+
+                lastItem.action = actionData;
                 return true;
             }
 
             if ( lastItem.value.constructor === Array) {
-                if (!setAction( lastItem.value)) {
+                const setActionResult: boolean = setAction( lastItem.value);
+
+                if (!setActionResult) {
                     if (actionData.operator === config.math.operators.closeGroup) {
-                        lastItem.action = {action: 'empty'};
-                        return true;
+                        if (lastItem.openGroup === true && !lastItem.closeGroup) {
+                            lastItem.action = null;
+                            lastItem.closeGroup = true;
+                            return true;
+                        } else {
+                            return false;
+                        }
                     } else {
                         lastItem.action = actionData;
                     }
                 }
             } else {
                 if (commands.length > 0) {
+
+                    // case: ']'
                     if (actionData.operator === config.math.operators.closeGroup) {
-                        if (!lastItem.closeGroup) {
+                        console.log('case: a]');
+
+                        if (lastItem.openGroup) {
                             lastItem.closeGroup = true;
+                            return true;
                         }
                         return false;
                     }
 
+                    // case: '['
                     if (commands[commands.length - 1].action && actionData.operator === config.math.operators.openGroup) {
-                        commands.push({value: [{value: '', openGroup: true}]});
+                        console.log('case: [a');
+
+                        commands.push({openGroup: true, value: [{value: ''}]});
 
                         return true;
                     }
+
+                    // case: 2 + 2 * 3
                     else if (commands.length > 1 && commands[commands.length - 2].action.priority < actionData.priority) {
+                        console.log('case: a + b * c');
+
                         lastItem.value = [{value: lastItem.value, action: actionData}];
                     }
+
+                    // case: 2 * (-5)
+                    // case: 2 * +
                     else if (commands[commands.length - 1].action && commands[commands.length - 1].action.priority === 1 && actionData.priority === 0) {
+                        console.log('case: a + b * (-c)');
+
                         if (actionData.operator === config.math.operators.subtract) {
                             commands.push({value: '-'});
                         }
                         return true;
                     }
+
+                    // case: 2 * 5 -
+                    // case: 2 * 5 +
                     else if (commands.length > 1 && commands[commands.length - 2].action.priority > actionData.priority) {
+                        console.log('case: a * b + c');
+
                         return false;
-                    } else {
+                    }
+
+                    // other cases
+                    else {
+                        console.log('case: a + b');
                         lastItem.action = actionData;
                     }
 
-                } else {
+                }
+
+                // case: first element
+                else {
                     lastItem.action = actionData;
                 }
             }

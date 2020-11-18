@@ -79,31 +79,29 @@ export default abstract class AbstractCalculatorView {
 
                 if (currentCommand.value.constructor === Array) {
 
-                    parse(currentCommand.value);
-
-                    if (currentCommand.hasOwnProperty('action') && currentCommand.action.action !== 'empty') {
-                        this._private__viewHistoryOperations += ` ${currentCommand.action.icon}`;
+                    if (currentCommand.openGroup) {
+                        this._private__viewHistoryOperations += ` [`;
                     }
+
+                    parse(currentCommand.value);
 
                     if (currentCommand.closeGroup) {
                         this._private__viewHistoryOperations += ` ]`;
                     }
 
-                    continue;
-                }
+                    if (currentCommand.hasOwnProperty('action') && currentCommand.action !== null) {
+                        this._private__viewHistoryOperations += ` ${currentCommand.action.icon}`;
+                    }
 
-                if (currentCommand.openGroup) {
-                    this._private__viewHistoryOperations += ` [`;
+                    continue;
                 }
 
                 const valueFormat: string = typeof currentCommand.value === "number" && currentCommand.value < 0 ? ` (${currentCommand.value})` : ` ${currentCommand.value}`;
                 this._private__viewHistoryOperations += valueFormat;
 
-                if (currentCommand.hasOwnProperty('action') && currentCommand.action.action !== 'empty') {
+                if (currentCommand.hasOwnProperty('action') && currentCommand.action !== null) {
                     this._private__viewHistoryOperations += ` ${currentCommand.action.icon}`;
                 }
-
-                console.log(currentCommand);
 
                 if (currentCommand.closeGroup) {
                     this._private__viewHistoryOperations += ` ]`;
