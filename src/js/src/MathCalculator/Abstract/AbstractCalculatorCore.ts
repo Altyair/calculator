@@ -66,17 +66,26 @@ export default abstract class AbstractCalculatorCore {
             const lastItem: any = commands[commands.length - 1];
 
             if (lastItem.hasOwnProperty('action')) {
+
+                // case: 5 + [
                 if (actionData.operator === config.math.operators.openGroup) {
+                    console.log('case: 5 + [');
+
                     commands.push({openGroup: true, value: [{value: ''}]});
                     return true;
-
                 }
 
-                lastItem.action = actionData;
-                return true;
+                // case: 5 +:*-
+                if (actionData.operator !== config.math.operators.closeGroup) {
+                    console.log('case: 5 +:*-');
+
+                    lastItem.action = actionData;
+                    return true;
+                }
+
             }
 
-            if ( lastItem.value.constructor === Array) {
+            if ( lastItem.value.constructor === Array ) {
                 const setActionResult: boolean = setAction( lastItem.value);
 
                 if (!setActionResult) {
@@ -99,10 +108,10 @@ export default abstract class AbstractCalculatorCore {
                     if (actionData.operator === config.math.operators.closeGroup) {
                         console.log('case: a]');
 
-                        if (lastItem.openGroup) {
-                            lastItem.closeGroup = true;
-                            return true;
-                        }
+                        //     lastItem.closeGroup = true;
+                        //     return true;
+                        // }
+
                         return false;
                     }
 
@@ -160,7 +169,9 @@ export default abstract class AbstractCalculatorCore {
         }
 
         if (!setAction( this._private__commands )) {
-            this._private__commands[this._private__commands.length - 1].action = actionData;
+            if (actionData.operator !== config.math.operators.closeGroup) {
+                this._private__commands[this._private__commands.length - 1].action = actionData;
+            }
         }
 
         this._private__calculateResultAndNotify();
