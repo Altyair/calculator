@@ -62,16 +62,26 @@ export default abstract class AbstractCalculatorCore {
      * @this {AbstractCalculatorCore}
      */
     setAction( actionData: any ): void {
+        const openGroup: string = config.math.operators.openGroup;
+        const closeGroup: string = config.math.operators.closeGroup;
+
         const setAction = ( commands ): boolean => {
             const lastItem: any = commands[commands.length - 1];
 
             if (lastItem.hasOwnProperty('action')) {
-                if (actionData.operator === config.math.operators.openGroup) {
+                if (actionData.operator === openGroup) {
                     commands.push({openGroup: true, value: [{value: ''}]});
                     return true;
                 }
 
-                if (actionData.operator !== config.math.operators.closeGroup) {
+                if (actionData.operator !== closeGroup) {
+                    if (lastItem.action.priority === 1 && actionData.priority === 0) {
+                        if (actionData.operator === config.math.operators.subtract) {
+                            commands.push({value: '-'});
+                            return true;
+                        }
+                    }
+
                     lastItem.action = actionData;
                     return true;
                 }
@@ -81,52 +91,41 @@ export default abstract class AbstractCalculatorCore {
                 const setActionResult: boolean = setAction( lastItem.value);
 
                 if (!setActionResult) {
-                    if (actionData.operator === config.math.operators.closeGroup) {
+                    if (actionData.operator === closeGroup) {
                         if (lastItem.openGroup && !lastItem.closeGroup) {
                             lastItem.action = null;
                             lastItem.closeGroup = true;
+
                             return true;
                         }
                         return false;
-                    } else {
-                        lastItem.action = actionData;
                     }
                 }
             } else {
-                if (commands.length > 0) {
-                    if (actionData.operator === config.math.operators.closeGroup) {
-                        return false;
-                    }
 
-                    if (commands[commands.length - 1].action && actionData.operator === config.math.operators.openGroup) {
+                if (lastItem.hasOwnProperty('value') && lastItem.value === '') {
+                    return true;
+                }
+
+                if (actionData.operator === closeGroup) {
+                    return !(commands.length > 1 && !lastItem.hasOwnProperty('action'));
+                }
+
+                if (actionData.operator === openGroup) {
+                    if (lastItem.action) {
                         commands.push({openGroup: true, value: [{value: ''}]});
-                        return true;
                     }
+                    return true;
+                }
 
-                    else if (commands.length > 1 && commands[commands.length - 2].action.priority < actionData.priority) {
-                        lastItem.value = [{value: lastItem.value, action: actionData}];
-                    }
-
-                    else if (commands[commands.length - 1].action && commands[commands.length - 1].action.priority === 1 && actionData.priority === 0) {
-                        if (actionData.operator === config.math.operators.subtract) {
-                            commands.push({value: '-'});
-                        }
-                        return true;
-                    }
-
-                    else if (commands.length > 1 && commands[commands.length - 2].action.priority > actionData.priority) {
-                        return false;
-                    }
-
-                    else {
-                        lastItem.action = actionData;
-                    }
-
+                else if (commands.length > 1 && commands[commands.length - 2].action.priority < actionData.priority) {
+                    lastItem.value = [{value: lastItem.value, action: actionData}];
                 }
 
                 else {
                     lastItem.action = actionData;
                 }
+
             }
 
             return true;
