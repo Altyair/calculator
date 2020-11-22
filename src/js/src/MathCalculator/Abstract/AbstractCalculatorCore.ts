@@ -66,23 +66,15 @@ export default abstract class AbstractCalculatorCore {
             const lastItem: any = commands[commands.length - 1];
 
             if (lastItem.hasOwnProperty('action')) {
-
-                // case: 5 + [
                 if (actionData.operator === config.math.operators.openGroup) {
-                    console.log('case: 5 + [');
-
                     commands.push({openGroup: true, value: [{value: ''}]});
                     return true;
                 }
 
-                // case: 5 +:*-
                 if (actionData.operator !== config.math.operators.closeGroup) {
-                    console.log('case: 5 +:*-');
-
                     lastItem.action = actionData;
                     return true;
                 }
-
             }
 
             if ( lastItem.value.constructor === Array ) {
@@ -90,75 +82,48 @@ export default abstract class AbstractCalculatorCore {
 
                 if (!setActionResult) {
                     if (actionData.operator === config.math.operators.closeGroup) {
-                        if (lastItem.openGroup === true && !lastItem.closeGroup) {
+                        if (lastItem.openGroup && !lastItem.closeGroup) {
                             lastItem.action = null;
                             lastItem.closeGroup = true;
                             return true;
-                        } else {
-                            return false;
                         }
+                        return false;
                     } else {
                         lastItem.action = actionData;
                     }
                 }
             } else {
                 if (commands.length > 0) {
-
-                    // case: ']'
                     if (actionData.operator === config.math.operators.closeGroup) {
-                        console.log('case: a]');
-
-                        //     lastItem.closeGroup = true;
-                        //     return true;
-                        // }
-
                         return false;
                     }
 
-                    // case: '['
                     if (commands[commands.length - 1].action && actionData.operator === config.math.operators.openGroup) {
-                        console.log('case: [a');
-
                         commands.push({openGroup: true, value: [{value: ''}]});
-
                         return true;
                     }
 
-                    // case: 2 + 2 * 3
                     else if (commands.length > 1 && commands[commands.length - 2].action.priority < actionData.priority) {
-                        console.log('case: a + b * c');
-
                         lastItem.value = [{value: lastItem.value, action: actionData}];
                     }
 
-                    // case: 2 * (-5)
-                    // case: 2 * +
                     else if (commands[commands.length - 1].action && commands[commands.length - 1].action.priority === 1 && actionData.priority === 0) {
-                        console.log('case: a + b * (-c)');
-
                         if (actionData.operator === config.math.operators.subtract) {
                             commands.push({value: '-'});
                         }
                         return true;
                     }
 
-                    // case: 2 * 5 -
-                    // case: 2 * 5 +
                     else if (commands.length > 1 && commands[commands.length - 2].action.priority > actionData.priority) {
-                        console.log('case: a * b + c');
-
                         return false;
                     }
 
-                    // other cases
                     else {
-                        console.log('case: a + b');
                         lastItem.action = actionData;
                     }
 
                 }
 
-                // case: first element
                 else {
                     lastItem.action = actionData;
                 }
