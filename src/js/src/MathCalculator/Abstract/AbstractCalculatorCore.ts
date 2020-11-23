@@ -75,7 +75,7 @@ export default abstract class AbstractCalculatorCore {
                 }
 
                 if (actionData.operator !== closeGroup) {
-                    if (lastItem.action.priority === 1 && actionData.priority === 0) {
+                    if (lastItem.action.hasOwnProperty('priority') && lastItem.action.priority === 1 && actionData.priority === 0) {
                         if (actionData.operator === config.math.operators.subtract) {
                             commands.push({value: '-'});
                             return true;
