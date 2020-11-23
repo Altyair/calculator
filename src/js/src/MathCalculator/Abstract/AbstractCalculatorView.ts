@@ -76,6 +76,10 @@ export default abstract class AbstractCalculatorView {
         const parse = ( commands ) => {
             for ( let i = 0; i < commands.length; i++ ) {
                 const currentCommand = commands[i];
+                //
+                // if (currentCommand.value == null) {
+                //     continue;
+                // }
 
                 if (currentCommand.value.constructor === Array) {
 

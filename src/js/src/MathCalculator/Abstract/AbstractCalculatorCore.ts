@@ -103,7 +103,7 @@ export default abstract class AbstractCalculatorCore {
                 }
             } else {
 
-                if (lastItem.hasOwnProperty('value') && lastItem.value === '') {
+                if (lastItem.hasOwnProperty('value') && !lastItem.value) {
                     return true;
                 }
 
@@ -112,9 +112,6 @@ export default abstract class AbstractCalculatorCore {
                 }
 
                 if (actionData.operator === openGroup) {
-                    if (lastItem.action) {
-                        commands.push({openGroup: true, value: [{value: ''}]});
-                    }
                     return true;
                 }
 
@@ -193,19 +190,29 @@ export default abstract class AbstractCalculatorCore {
 
     _private__calculateResult(): void {
         const calculate = ( data ): number => {
-            let result = data[0].value.constructor === Array ? calculate( data[0].value ) : ['-', '', 'empty'].indexOf(data[0].value) !== -1 ? 1 : data[0].value;
+            const value: any =  data[0].value;
+
+            if (value === '') {
+                return null;
+            }
+
+            let result = value.constructor === Array ? calculate( value ) : ['-'].indexOf(value) !== -1 ? 1 : value;
 
             data.forEach((currentCommand: any, index: number, array) => {
                 const nextCommand: any = array[index + 1];
 
-                if ( currentCommand.action && nextCommand ) {
+                if ( currentCommand.action && nextCommand) {
                     let operand2 = nextCommand.value.constructor === Array ? calculate( nextCommand.value ) : nextCommand.value;
 
-                    if (operand2 === '-') {
-                        operand2 = 1;
-                    }
+                    if (operand2) {
+                        if (operand2 === '-') {
+                            operand2 = 1;
+                        }
 
-                    result = currentCommand.action.action( result, operand2 );
+                        if (operand2) {
+                            result = currentCommand.action.action(result, operand2);
+                        }
+                    }
                 }
             });
 
