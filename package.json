@@ -1,6 +1,6 @@
 {
   "name": "mathematical-calculator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "calculator",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
