@@ -16,6 +16,6 @@ create a container for the calculator:
 in js:<br>
 `import { CalculatorFacade } from 'mathematical-calculator';`
 
-`const calculator = new CalculatorFacade({type: 'simple'});`
+`const calculator = new CalculatorFacade({type: 'simple'});`<br>
 `calculator.create();`
 
