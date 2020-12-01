@@ -1,27 +1,24 @@
-body {
-    margin: 0;
-    padding: 0;
-}
-
-#calculator {
+.calculator-altyair {
     display: flex;
     flex-direction: column;
     width: 360px;
-    border: 1px solid gray
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-family: sans-serif;
 }
 
-.result {
+.calculator-altyair__result {
     flex: 0 0 100px;
     padding: 10px;
     border-bottom: 1px solid gray;
 }
 
-.actions {
+.calculator-altyair__actions {
     display: flex;
     flex-wrap: wrap;
 }
 
-.action {
+.calculator-altyair__action {
     width: calc(100% / 12 * 3 - 10px);
     margin: 4px 5px;
     box-sizing: border-box;

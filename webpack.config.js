@@ -3,9 +3,10 @@
 const path = require('path');
 
 module.exports = {
+    mode: 'none',
     entry: './src/js/index.ts',
     output: {
-        path: path.resolve(__dirname, '/public/dist/js'),
+        path: path.resolve(__dirname, 'public/dist/js'),
         filename: '[name].js',
         publicPath: '/'
     },
@@ -14,7 +15,7 @@ module.exports = {
         extensions: [ '.tsx', '.ts', '.js' ],
     },
 
-    watch: true,
+    watch: false,
 
     watchOptions: {
         aggregateTimeout: 100

@@ -15,7 +15,7 @@ class Application {
     }
 
     private static _createCalculator(): void {
-        const calculator = new CalculatorFacade({type: config.math.type.simple});
+        const calculator = new CalculatorFacade({type: 'simple'});
         calculator.create();
     }
 

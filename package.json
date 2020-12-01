@@ -1,5 +1,5 @@
 {
-  "name": "20170526",
+  "name": "mathematical-calculator",
   "version": "1.0.0",
   "main": "calculator",
   "scripts": {
@@ -29,7 +29,7 @@
     "typescript": "^3.9.7",
     "webpack-cli": "^3.3.12"
   },
-  "author": "",
+  "author": "altyair",
   "license": "ISC",
   "description": ""
 }

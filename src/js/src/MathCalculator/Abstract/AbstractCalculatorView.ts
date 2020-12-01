@@ -36,10 +36,10 @@ export default abstract class AbstractCalculatorView {
     }
 
     _private__findElements(): void {
-        const calculatorRootDomElement = document.getElementById('calculator');
+        const calculatorRootDomElement = document.querySelector('.calculator-altyair');
 
-        this._protected__resultBlock = calculatorRootDomElement.querySelector('.result');
-        this._private__actionsBlock = calculatorRootDomElement.querySelector('.actions');
+        this._protected__resultBlock = calculatorRootDomElement.querySelector('.calculator-altyair__result');
+        this._private__actionsBlock = calculatorRootDomElement.querySelector('.calculator-altyair__actions');
     }
 
     /**
@@ -69,8 +69,6 @@ export default abstract class AbstractCalculatorView {
     }
 
     render( message: any ) {
-        console.log(message.commands);
-
         this._private__viewHistoryOperations = '';
 
         const parse = ( commands ) => {

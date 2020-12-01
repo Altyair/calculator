@@ -69,12 +69,12 @@ export default abstract class AbstractCalculatorCore {
             const lastItem: any = commands[commands.length - 1];
 
             if (lastItem.hasOwnProperty('action')) {
-                if (actionData.operator === openGroup) {
+                if (actionData.operator === openGroup && lastItem.action) {
                     commands.push({openGroup: true, value: [{value: ''}]});
                     return true;
                 }
 
-                if (actionData.operator !== closeGroup) {
+                if (actionData.operator !== closeGroup && actionData.operator !== openGroup) {
                     if (lastItem.action && lastItem.action.priority === 1 && actionData.priority === 0) {
                         if (actionData.operator === config.math.operators.subtract) {
                             commands.push({value: '-'});
@@ -145,33 +145,52 @@ export default abstract class AbstractCalculatorCore {
      * @this {AbstractCalculatorCore}
      */
     setUndo(): void {
-        const setUndo = ( commands ): void => {
+        const setUndo = ( commands ): boolean => {
             const lastItem: any = commands[commands.length - 1];
 
-            if ( lastItem.value.constructor === Array ) {
-                setUndo( lastItem.value );
-            } else {
+            if (lastItem.closeGroup) {
+                lastItem.closeGroup = null;
+
+                return true;
+            }
+
+            else if ( lastItem.value.constructor === Array ) {
+                const result: boolean = setUndo( lastItem.value );
+
+                if (!result) {
+                    commands.pop();
+
+                    return true;
+                }
+            }
+            else {
                 const lastItemValue: string = String( lastItem.value );
 
                 if (  lastItem.action ) {
+
                     delete lastItem.action;
+
                 } else if ( lastItemValue.length > 1 ) {
+
                     lastItem.value = parseFloat( lastItemValue.slice(0, -1) );
+
                 } else if ( lastItemValue.length === 1 ) {
                     if ( commands.length > 1 ) {
                         commands.pop();
+
+                        return true;
                     } else {
-                        if ( this._private__commands.length > 1 ) {
-                            this._private__commands.pop();
-                        } else {
-                            this._private__commands = [{value: 0}];
-                        }
+                        return false;
                     }
                 }
             }
+
+            return true;
         }
 
-        setUndo( this._private__commands );
+        if (!setUndo( this._private__commands )) {
+            this._private__commands = [{value: 0}];
+        }
 
         this._private__calculateResultAndNotify();
     }

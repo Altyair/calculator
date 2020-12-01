@@ -64,30 +64,30 @@ export default class SimpleCalculatorEnableStateView extends AbstractCalculatorV
     }
 
     _protected__renderTemplate(): void {
-        document.getElementById('calculator').innerHTML = `
-            <div class="result"></div>
-            <div class="actions">
-                <div class="action" data-action="onOff">OFF</div>
-                <div class="action" data-action=""></div>
-                <div class="action" data-action=""></div>
-                <div class="action" style="width: calc(100% / 12 * 1.5 - 10px)" data-action="onOpenGroup">[</div>
-                <div class="action" style="width: calc(100% / 12 * 1.5 - 10px)" data-action="onCloseGroup">]</div>
-                <div class="action" data-action="onReset">С</div>
-                <div class="action" data-action="onUndo">x</div>
-                <div class="action" data-action="onPersent">%</div>
-                <div class="action" data-action="onDivide">:</div>
-                <div class="action" data-action="onDigit">7</div>
-                <div class="action" data-action="onDigit">8</div>
-                <div class="action" data-action="onDigit">9</div>
-                <div class="action" data-action="onMultiply">*</div>
-                <div class="action" data-action="onDigit">4</div>
-                <div class="action" data-action="onDigit">5</div>
-                <div class="action" data-action="onDigit">6</div>
-                <div class="action" data-action="onSubtract">-</div>
-                <div class="action" data-action="onDigit">1</div>
-                <div class="action" data-action="onDigit">2</div>
-                <div class="action" data-action="onDigit">3</div>
-                <div class="action" data-action="onAdd">+</div>
+        document.getElementsByClassName('calculator-altyair')[0].innerHTML = `
+            <div class="calculator-altyair__result"></div>
+            <div class="calculator-altyair__actions">
+                <div class="calculator-altyair__action" data-action="onOff">OFF</div>
+                <div class="calculator-altyair__action" data-action=""></div>
+                <div class="calculator-altyair__action" data-action=""></div>
+                <div class="calculator-altyair__action" style="width: calc(100% / 12 * 1.5 - 10px)" data-action="onOpenGroup">[</div>
+                <div class="calculator-altyair__action" style="width: calc(100% / 12 * 1.5 - 10px)" data-action="onCloseGroup">]</div>
+                <div class="calculator-altyair__action" data-action="onReset">С</div>
+                <div class="calculator-altyair__action" data-action="onUndo">x</div>
+                <div class="calculator-altyair__action" data-action="onPersent">%</div>
+                <div class="calculator-altyair__action" data-action="onDivide">:</div>
+                <div class="calculator-altyair__action" data-action="onDigit">7</div>
+                <div class="calculator-altyair__action" data-action="onDigit">8</div>
+                <div class="calculator-altyair__action" data-action="onDigit">9</div>
+                <div class="calculator-altyair__action" data-action="onMultiply">*</div>
+                <div class="calculator-altyair__action" data-action="onDigit">4</div>
+                <div class="calculator-altyair__action" data-action="onDigit">5</div>
+                <div class="calculator-altyair__action" data-action="onDigit">6</div>
+                <div class="calculator-altyair__action" data-action="onSubtract">-</div>
+                <div class="calculator-altyair__action" data-action="onDigit">1</div>
+                <div class="calculator-altyair__action" data-action="onDigit">2</div>
+                <div class="calculator-altyair__action" data-action="onDigit">3</div>
+                <div class="calculator-altyair__action" data-action="onAdd">+</div>
             </div>`;
     }
 }
