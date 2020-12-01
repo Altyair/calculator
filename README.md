@@ -7,3 +7,15 @@ To install, run:
 
 npm i mathematical-calculator
 
+How to use:
+
+in html:
+create a container for the calculator:   
+`<div class="calculator-altyair"></div>`
+
+in js:<br>
+`import { CalculatorFacade } from 'mathematical-calculator';`
+
+`const calculator = new CalculatorFacade({type: 'simple'});`
+`calculator.create();`
+
