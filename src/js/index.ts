@@ -1,5 +1,4 @@
-import config from './config/default'
-import { CalculatorFacade } from './src/CalculatorFacade/index';
+import { CalculatorFacade } from 'mathematical-calculator';
 
 /**
  * Creates an instance Application.
