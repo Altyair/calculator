@@ -1,4 +1,4 @@
-import { CalculatorFacade } from 'mathematical-calculator';
+import {CalculatorFacade} from 'mathematical-calculator';
 
 /**
  * Creates an instance Application.
@@ -10,15 +10,17 @@ import { CalculatorFacade } from 'mathematical-calculator';
 class Application {
 
     main() {
-      Application._createCalculator();
+      this._createCalculator();
     }
 
-    private static _createCalculator(): void {
+    _createCalculator() {
         const calculator = new CalculatorFacade({type: 'simple'});
         calculator.create();
     }
 
 }
 
-const application = new Application();
-application.main();
+window.onload = function() {
+    const application = new Application();
+    application.main();
+};

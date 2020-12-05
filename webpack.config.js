@@ -4,9 +4,9 @@ const path = require('path');
 
 module.exports = {
     mode: 'none',
-    entry: './src/js/index.ts',
+    entry: './demo/js/index.js',
     output: {
-        path: path.resolve(__dirname, 'public/dist/js'),
+        path: path.resolve(__dirname, 'demo/dist/js'),
         filename: '[name].js',
         publicPath: '/'
     },
@@ -34,7 +34,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env']
+                        presets: ['@babel/preset-env'],
                     }
                 }
             }
@@ -46,4 +46,6 @@ module.exports = {
         port: 8080,
         contentBase: __dirname + '/public'
     }
+
 };
+

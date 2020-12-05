@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./public/dist/js/main.js');
+module.exports = require('./public/dist/js/bundle.js');
