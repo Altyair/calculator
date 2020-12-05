@@ -2,7 +2,7 @@
 /node_modules/*
 /old/*
 /src/img/*
-gulpfile.js
-webpack.config.js
-tsconfig.json
+./gulpfile.js
+./webpack.config.js
+./tsconfig.json
 /demo/dist
