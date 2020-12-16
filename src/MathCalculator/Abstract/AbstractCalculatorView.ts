@@ -69,6 +69,8 @@ export default abstract class AbstractCalculatorView {
     }
 
     render( message: any ) {
+        console.log(message);
+
         this._private__viewHistoryOperations = '';
 
         const parse = ( commands ) => {

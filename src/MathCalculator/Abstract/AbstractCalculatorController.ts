@@ -1,5 +1,5 @@
-import config from "../../../config/default";
-import {AbstractCalculatorCore, AbstractCalculatorView} from "../Abstract/index";
+import config from "../../config/default";
+import {AbstractCalculatorCore, AbstractCalculatorView} from "./index";
 
 /**
  * Creates an instance AbstractCalculatorController.

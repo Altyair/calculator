@@ -1,4 +1,4 @@
-import config from '../../../config/default';
+import config from '../../config/default';
 import {EventEmitter} from "../../EventEmitterModule/index";
 
 /**
@@ -43,9 +43,11 @@ export default abstract class AbstractCalculatorCore {
                 }
             } else {
                 if ( !lastItem.hasOwnProperty('action') ) {
-                    lastItem.value = !lastItem.value ? parseFloat(value) : parseFloat(lastItem.value + value);
+                    lastItem.value = !lastItem.value && value !== '.' ? parseFloat(value) : String(lastItem.value + value);
                 } else {
-                    commands.push( { value: parseFloat( value ) } );
+                    if ( value !== '.' ) {
+                        commands.push( { value: value } );
+                    }
                 }
             }
         }
@@ -221,15 +223,15 @@ export default abstract class AbstractCalculatorCore {
                 const nextCommand: any = array[index + 1];
 
                 if ( currentCommand.action && nextCommand) {
-                    let operand2 = nextCommand.value.constructor === Array ? calculate( nextCommand.value ) : nextCommand.value;
+                    let operand2: any = nextCommand.value.constructor === Array ? calculate( nextCommand.value ) : nextCommand.value;
 
-                    if (operand2) {
+                    if (operand2 !== null) {
                         if (operand2 === '-') {
                             operand2 = 1;
                         }
 
                         if (operand2) {
-                            result = currentCommand.action.action(result, operand2);
+                            result = currentCommand.action.action(parseFloat(result), parseFloat(operand2));
                         }
                     }
                 }

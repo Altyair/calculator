@@ -1,5 +1,5 @@
 import {AbstractCalculatorView} from '../Abstract/index';
-import config from "../../../config/default";
+import config from "../../config/default";
 
 /**
  * Creates an instance AdvancedCalculatorView.

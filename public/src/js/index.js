@@ -1,7 +1,4 @@
-import "../css/style.css";
-// import {CalculatorFacade} from '../../../public/dist/js/bundle';
-import {CalculatorFacade} from 'mathematical-calculator';
-
+import {CalculatorFacade} from '../../../src/CalculatorFacade/index';
 
 /**
  * Creates an instance Application.

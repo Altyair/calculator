@@ -1,4 +1,4 @@
-import config from '../../config/default'
+import config from '../config/default'
 import {AbstractCalculatorCore, AbstractCalculatorController, AbstractCalculatorView} from "../MathCalculator/Abstract/index";
 
 import {
