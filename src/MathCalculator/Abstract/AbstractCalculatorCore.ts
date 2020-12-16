@@ -43,6 +43,9 @@ export default abstract class AbstractCalculatorCore {
                 }
             } else {
                 if ( !lastItem.hasOwnProperty('action') ) {
+                    if ( value === '.' && !Number.isInteger(parseFloat(lastItem.value))) {
+                        return;
+                    }
                     lastItem.value = !lastItem.value && value !== '.' ? parseFloat(value) : String(lastItem.value + value);
                 } else {
                     if ( value !== '.' ) {
