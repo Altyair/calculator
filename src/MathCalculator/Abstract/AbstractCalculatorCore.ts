@@ -108,7 +108,7 @@ export default abstract class AbstractCalculatorCore {
                 }
             } else {
 
-                if (lastItem.hasOwnProperty('value') && !lastItem.value) {
+                if (lastItem.hasOwnProperty('value') && lastItem.value === '') {
                     return true;
                 }
 
