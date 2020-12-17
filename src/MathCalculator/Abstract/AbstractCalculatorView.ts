@@ -111,7 +111,7 @@ export default abstract class AbstractCalculatorView {
 
         parse( message.commands );
 
-        this._protected__resultBlock.innerHTML = `<h5>${this._private__viewHistoryOperations}</h5><h3>${message.result}</h3>`;
+        this._protected__resultBlock.innerHTML = `<h5>${this._private__viewHistoryOperations}</h5><h3><strong>=</strong> ${message.result}</h3>`;
     }
 
     abstract _protected__renderTemplate(): void;
