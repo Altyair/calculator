@@ -90,7 +90,7 @@ export default abstract class AbstractCalculatorView {
                     }
 
                     if (currentCommand.hasOwnProperty('action') && currentCommand.action !== null) {
-                        this._private__viewHistoryOperations += ` ${currentCommand.action.icon}`;
+                        this._private__viewHistoryOperations += ` <strong>${currentCommand.action.icon}</strong>`;
                     }
 
                     continue;
@@ -100,7 +100,7 @@ export default abstract class AbstractCalculatorView {
                 this._private__viewHistoryOperations += valueFormat;
 
                 if (currentCommand.hasOwnProperty('action') && currentCommand.action !== null) {
-                    this._private__viewHistoryOperations += ` ${currentCommand.action.icon}`;
+                    this._private__viewHistoryOperations += ` <strong>${currentCommand.action.icon}</strong>`;
                 }
 
                 if (currentCommand.closeGroup) {
@@ -111,7 +111,7 @@ export default abstract class AbstractCalculatorView {
 
         parse( message.commands );
 
-        this._protected__resultBlock.innerHTML = `<h5>${this._private__viewHistoryOperations}</h5><h3><strong>=</strong> ${message.result}</h3>`;
+        this._protected__resultBlock.innerHTML = `<h3>${this._private__viewHistoryOperations}</h3><h2><strong>=</strong> ${message.result}</h2>`;
     }
 
     abstract _protected__renderTemplate(): void;

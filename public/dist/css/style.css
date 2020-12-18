@@ -5,17 +5,26 @@
     border: 1px solid gray;
     border-radius: 5px;
     font-family: sans-serif;
+    color: #151124;
+    font-weight: bold;
 }
 
 .calculator-altyair__result {
     flex: 0 0 100px;
     padding: 10px;
     border-bottom: 1px solid gray;
+    min-height: 110px;
+}
+
+.calculator-altyair__result strong {
+    color: #8BB7E5;
+    font-weight: bold;
 }
 
 .calculator-altyair__actions {
     display: flex;
     flex-wrap: wrap;
+    border-radius: 5px;
 }
 
 .calculator-altyair__action {
@@ -23,9 +32,15 @@
     margin: 4px 5px;
     box-sizing: border-box;
     text-align: center;
-    background: gainsboro;
+    background: #E3EEF7;
     padding: 10px;
     cursor: pointer;
+    border-radius: 5px;
+}
+
+.calculator-altyair_theme_light .calculator-altyair__action_operation {
+    background: #8BB7E5;
+    color: #fff;
 }
 
 

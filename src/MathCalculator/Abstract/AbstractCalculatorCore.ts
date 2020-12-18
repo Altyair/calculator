@@ -182,7 +182,7 @@ export default abstract class AbstractCalculatorCore {
 
                     lastItem.value = parseFloat( lastItemValue.slice(0, -1) );
 
-                } else if ( lastItemValue.length === 1 ) {
+                } else if ( lastItemValue.length === 1 || lastItemValue === '') {
                     if ( commands.length > 1 ) {
                         commands.pop();
 
